@@ -15,6 +15,17 @@ const User = db.define('user', {
   password: {
     type: Sequelize.STRING,
   },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+  },
+  type: {
+    type: Sequelize.ENUM('siteAdmin', 'customer'),
+    defaultValue: 'customer',
+  },
+  address: {
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = User;
@@ -72,5 +83,3 @@ const hashPassword = async (user) => {
 User.beforeCreate(hashPassword);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
-
-//added a comment
