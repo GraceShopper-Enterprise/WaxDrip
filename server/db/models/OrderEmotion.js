@@ -1,25 +1,24 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
-const axios = require('axios');
+const Sequelize = require("sequelize");
+const db = require("../db");
+const axios = require("axios");
 
-const OrderEmotion = db.define('orderEmotion', {
+const OrderEmotion = db.define("orderEmotion", {
   orderId: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   emotionId: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   emotionQuantity: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   emotionPriceAtPurchase: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
 });
 
 module.exports = OrderEmotion;
-
