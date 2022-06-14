@@ -1,21 +1,25 @@
 # FS-App-Template
 
-## Setup
 
-To use this as boilerplate, you'll need to take the following steps:
+What WaxDrip is for:
 
-* Don't fork or clone this repo! Instead, create a new, empty
-  directory on your machine and `git init` (or create an empty repo on
-  Github and clone it to your local machine)
-
-* Now you will have to add the fs-app-template as a remote and merge it into your own repository.
-
-```
-git remote add boilermaker git@github.com:FullstackAcademy/fs-app-template.git
-git fetch boilermaker
-git merge boilermaker/main
-git branch -m master main
-```
+- candles
+- clothes
+- emotions
+    - Happy
+    - Sad TM
+    - Enui
+    - Despair
+    - Pride
+    - Pride (American)
+    - Pride (unearned)
+    - Pride (sinful)
+        - ** (REQ'D, no null) price
+        - ** (default, no null) image -> emoji?
+        - ** (REQ'D, no null) quantity()
+        - reccomended emotional capacity (EMPATHY)
+        - warnings
+        - ** (default) description by the admin
 
 ## Customize
 
