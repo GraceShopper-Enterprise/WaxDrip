@@ -1,19 +1,19 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
-const axios = require('axios');
+const Sequelize = require("sequelize");
+const db = require("../db");
+const axios = require("axios");
 
-const Orders = db.define('order', {
+const Orders = db.define("order", {
   status: {
-    type: Sequelize.ENUM('confirmed', 'en-route', 'delivered'),
-    defaultValue: 'confirmed',
+    type: Sequelize.ENUM("confirmed", "en-route", "delivered"),
+    defaultValue: "confirmed",
   },
   dateCreated: {
     type: Sequelize.DATE,
-    defaultValue: DataTypes.NOW,
+    defaultValue: Sequelize.NOW,
   },
 });
 
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 module.exports = Orders;
