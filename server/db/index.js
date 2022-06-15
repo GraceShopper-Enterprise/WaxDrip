@@ -11,23 +11,23 @@ const CartEmotion = require("./models/CartEmotion");
 const Wishlist = require("./models/Wishlist");
 
 //associations could go here!
-// User.hasOne(Cart);
-// Cart.belongsTo(User);
+User.hasOne(Cart);
+Cart.belongsTo(User);
 
-// User.hasOne(Wishlist);
-// Wishlist.belongsTo(User);
+User.hasOne(Wishlist);
+Wishlist.belongsTo(User);
 
-// User.hasMany(Order);
-// Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsTo(User);
 
-// Order.belongsToMany(Emotion, { through: OrderEmotion });
-// Emotion.belongsToMany(Order, { through: OrderEmotion });
+Order.belongsToMany(Emotion, { through: OrderEmotion });
+Emotion.belongsToMany(Order, { through: OrderEmotion });
 
-// Cart.belongsToMany(Emotion, { through: CartEmotion });
-// Emotion.belongsToMany(Cart, { through: CartEmotion });
+Cart.belongsToMany(Emotion, { through: CartEmotion });
+Emotion.belongsToMany(Cart, { through: CartEmotion });
 
-// Wishlist.belongsToMany(Emotion, { through: "WishlistEmotion" });
-// Emotion.belongsToMany(Wishlist, { through: "WishlistEmotion" });
+Wishlist.belongsToMany(Emotion, { through: "WishlistEmotion" });
+Emotion.belongsToMany(Wishlist, { through: "WishlistEmotion" });
 
 module.exports = {
   db,
