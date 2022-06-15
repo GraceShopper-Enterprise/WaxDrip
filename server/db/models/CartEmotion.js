@@ -1,8 +1,8 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-const axios = require("axios");
+const Sequelize = require('sequelize');
+const db = require('../db');
+const axios = require('axios');
 
-const CartEmotion = db.define("cartEmotion", {
+const CartEmotion = db.define('cartEmotion', {
   cartId: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -13,6 +13,7 @@ const CartEmotion = db.define("cartEmotion", {
   },
   emotionQuantity: {
     type: Sequelize.INTEGER,
+    defaultValue: 1,
     allowNull: false,
   },
 });

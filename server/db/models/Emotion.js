@@ -5,11 +5,10 @@ const axios = require("axios");
 const Emotion = db.define("emotion", {
   name: {
     type: Sequelize.STRING,
-    // unique: true,
     allowNull: false,
   },
   price: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL(10, 2),
     allowNull: false,
   },
   imageURL: {
