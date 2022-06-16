@@ -15,7 +15,22 @@ nav a {
   margin: 1em;
 }
 
+img {
+  border-radius: 3px;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.displayAll {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.singleItem {
+  margin: 2px;
 }

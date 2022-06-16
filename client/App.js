@@ -1,4 +1,5 @@
 import React from 'react'
+import AllProducts from './components/AllEmotions'
 
 import Navbar from './components/Navbar'
 import Routes from './Routes'
@@ -13,3 +14,6 @@ const App = () => {
 }
 
 export default App
+
+{/* <Navbar />
+      <Routes /> */}
