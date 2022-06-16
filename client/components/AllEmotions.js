@@ -7,7 +7,7 @@ import { fetchEmotions, setEmotions } from "../store/allEmotions";
 const AllEmotions = (props) => {
   const dispatch = useDispatch();
   console.log(props);
-  const emotions = props.allEmotions.emotionReducer;
+  const emotions = props.allEmotions.emotions;
 
   useEffect(() => {
     async function fetchData() {

@@ -6,7 +6,11 @@ import auth from "./auth";
 import emotionReducer from "./allEmotions";
 import singleEmotionReducer from "./singleEmotion";
 
-const reducer = combineReducers({ auth, emotionReducer, singleEmotionReducer });
+const reducer = combineReducers({
+  auth,
+  emotions: emotionReducer,
+  singleEmotion: singleEmotionReducer,
+});
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

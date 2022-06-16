@@ -32,7 +32,7 @@ export class SingleEmotionView extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    singleEmotion: state.singleEmotionReducer,
+    singleEmotion: state.singleEmotion,
   };
 };
 
