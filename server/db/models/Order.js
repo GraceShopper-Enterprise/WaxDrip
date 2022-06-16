@@ -54,7 +54,7 @@ Order.beforeUpdate(async (order) => {
       orderEmotions.map(async (orderEmotion) => {
         const emotion = await Emotion.findByPk(orderEmotion.emotionId);
         const emotionPrice = emotion.price;
-        orderEmotion.emotionPrice = emotionPrice;
+        orderEmotion.emotionPriceInOrder = emotionPrice;
       })
     );
   }

@@ -17,7 +17,7 @@ const OrderEmotion = db.define('orderEmotion', {
     defaultValue: 1,
     allowNull: false,
   },
-  emotionPrice: {
+  emotionPriceInOrder: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
     allowNull: false,
@@ -39,7 +39,7 @@ const OrderEmotion = db.define('orderEmotion', {
 const assignPrice = async (orderEmotion) => {
   const emotion = await Emotion.findByPk(orderEmotion.emotionId);
   const emotionPrice = emotion.price;
-  orderEmotion.emotionPrice = emotionPrice;
+  orderEmotion.emotionPriceInOrder = emotionPrice;
 };
 
 // assign price whenever first created, or when the quantity changes

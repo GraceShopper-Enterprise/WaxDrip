@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Emotion, Order },
+  models: { User, Emotion, Order, Tag },
 } = require('../server/db');
 
 /**
@@ -617,7 +617,7 @@ async function seed() {
     }),
   ]);
 
-  // creating Emotions
+  // Creating Emotions
   const emotions = await Promise.all([
     Emotion.create({
       name: 'Green',
@@ -1518,6 +1518,25 @@ async function seed() {
     }),
   ]);
 
+  // Creating Tags
+  const tags = await Promise.all([
+    Tag.create({
+      name: 'cheap',
+    }),
+    Tag.create({
+      name: 'family-friendly',
+    }),
+    Tag.create({
+      name: 'expensive',
+    }),
+    Tag.create({
+      name: 'sinful',
+    }),
+    Tag.create({
+      name: 'positive',
+    }),
+  ]);
+
   // Add items to carts, users 1->6
   await Promise.all([
     (await (await User.findByPk(1)).getCart()).addEmotion(1),
@@ -1566,7 +1585,7 @@ async function seed() {
 
   // seeding has completed
   console.log(
-    `seeded ${users.length} users, ${emotions.length} emotions, ${carts.length} carts, and ${orders.length} executed orders`
+    `seeded ${users.length} users, ${emotions.length} emotions, ${carts.length} carts, ${orders.length} executed orders, and ${tags.length} tags`
   );
   console.log(`seeded successfully`);
 
