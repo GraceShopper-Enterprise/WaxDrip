@@ -6,7 +6,8 @@ import { fetchEmotions, setEmotions } from "../store/allEmotions";
 
 const AllEmotions = (props) => {
   const dispatch = useDispatch();
-  const emotions = props.props.emotionReducer;
+  console.log(props);
+  const emotions = props.allEmotions.emotions;
 
   useEffect(() => {
     async function fetchData() {
@@ -38,7 +39,7 @@ const AllEmotions = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { props: state };
+  return { allEmotions: state };
 };
 
 export default connect(mapStateToProps)(AllEmotions);

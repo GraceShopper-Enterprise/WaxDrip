@@ -22,3 +22,12 @@ router.delete("/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+router.get("/:emotionId", async (req, res, next) => {
+  try {
+    const emotion = await Emotion.findByPk(req.params.emotionId);
+    res.send(emotion);
+  } catch (err) {
+    next(err);
+  }
+});

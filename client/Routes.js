@@ -5,6 +5,7 @@ import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import { me } from "./store";
 import AllEmotions from "./components/AllEmotions";
+import SingleEmotionView from "./components/SingleEmotionView";
 
 /**
  * COMPONENT
@@ -29,7 +30,12 @@ class Routes extends Component {
             <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/emotions" component={AllEmotions} />
+            <Route exact path="/emotions" component={AllEmotions} />
+            <Route
+              exact
+              path="/emotions/:emotionId"
+              component={SingleEmotionView}
+            />
           </Switch>
         )}
       </div>
