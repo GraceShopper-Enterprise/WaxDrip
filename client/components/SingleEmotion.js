@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleEmotion } from "../store/singleEmotion";
 
-export class SingleEmotionView extends React.Component {
+export class SingleEmotion extends React.Component {
   componentDidMount() {
     try {
       const emotionId = this.props.match.params.emotionId;
@@ -42,4 +42,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleEmotionView);
+export default connect(mapStateToProps, mapDispatchToProps)(SingleEmotion);
