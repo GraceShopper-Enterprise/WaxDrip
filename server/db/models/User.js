@@ -3,6 +3,8 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const axios = require('axios');
+const OrderEmotion = require('./OrderEmotion');
+const Order = require('./Order');
 
 const SALT_ROUNDS = 5;
 
@@ -40,6 +42,21 @@ User.prototype.correctPassword = function (candidatePwd) {
 
 User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT);
+};
+
+//new methods
+User.prototype.getCart = async function () {
+  const cart = await Order.findOne({
+    where: { userId: this.id, status: 'cart' },
+  });
+  return cart;
+};
+
+User.prototype.checkoutCart = async function () {
+  const cart = await this.getCart();
+  const date = new Date();
+  await cart.update({ status: 'ordered', datePurchased: date });
+  this.createOrder({ status: 'cart' });
 };
 
 /**
@@ -80,6 +97,13 @@ const hashPassword = async (user) => {
   }
 };
 
+const makeCart = async (user) => {
+  user.createOrder({ status: 'cart' });
+};
+
 User.beforeCreate(hashPassword);
 User.beforeUpdate(hashPassword);
 User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
+
+User.afterCreate(makeCart);
+User.afterBulkCreate((users) => Promise.all(users.map(makeCart)));
