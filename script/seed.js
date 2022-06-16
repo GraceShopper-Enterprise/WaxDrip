@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Emotion, Order, Cart, Wishlist, OrderEmotion },
+  models: { User, Emotion, Order },
 } = require('../server/db');
 
 /**
@@ -13,7 +13,7 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log('db synced!');
 
-  // Creating Users
+  // Creating Users, carts automatically made
   const users = await Promise.all([
     User.create({
       username: 'Tomkin Winkle',
@@ -621,7 +621,7 @@ async function seed() {
   const emotions = await Promise.all([
     Emotion.create({
       name: 'Green',
-      price: 5.02,
+      price: 5,
       imageURL: 'http://dummyimage.com/176x100.png/dddddd/000000',
       stockQuantity: 30,
       description:
@@ -1518,89 +1518,56 @@ async function seed() {
     }),
   ]);
 
-  // Create Carts for users 1-6
-  const carts = await Promise.all([
-    (await User.findByPk(1)).createCart({}),
-    (await User.findByPk(2)).createCart({}),
-    (await User.findByPk(3)).createCart({}),
-    (await User.findByPk(4)).createCart({}),
-    (await User.findByPk(5)).createCart({}),
-    (await User.findByPk(6)).createCart({}),
-  ]);
-  // Add items to carts
+  // Add items to carts, users 1->6
   await Promise.all([
-    (await Cart.findByPk(1)).addEmotion(1),
-    (await Cart.findByPk(1)).addEmotion(2),
-    (await Cart.findByPk(1)).addEmotion(3),
+    (await (await User.findByPk(1)).getCart()).addEmotion(1),
+    (await (await User.findByPk(1)).getCart()).addEmotion(2),
+    (await (await User.findByPk(1)).getCart()).addEmotion(3),
     //
-    (await Cart.findByPk(2)).addEmotion(10),
-    (await Cart.findByPk(2)).addEmotion(11),
+    (await (await User.findByPk(2)).getCart()).addEmotion(10),
+    (await (await User.findByPk(2)).getCart()).addEmotion(11),
     //
-    (await Cart.findByPk(3)).addEmotion(30),
-    (await Cart.findByPk(4)).addEmotion(40),
-    (await Cart.findByPk(5)).addEmotion(50),
+    (await (await User.findByPk(3)).getCart()).addEmotion(30),
+    (await (await User.findByPk(4)).getCart()).addEmotion(40),
+    (await (await User.findByPk(5)).getCart()).addEmotion(50),
     //
-    (await Cart.findByPk(6)).addEmotion(60),
-    (await Cart.findByPk(6)).addEmotion(61),
-    (await Cart.findByPk(6)).addEmotion(62),
+    (await (await User.findByPk(6)).getCart()).addEmotion(60),
+    (await (await User.findByPk(6)).getCart()).addEmotion(61),
+    (await (await User.findByPk(6)).getCart()).addEmotion(62),
   ]);
-  //assign quantities to carts
+
+  //assign quantities to 6 carts
   await Promise.all([
-    (await Cart.findByPk(1)).setEmotionQuantity(1, 10),
-    (await Cart.findByPk(1)).setEmotionQuantity(2, 10),
-    (await Cart.findByPk(1)).setEmotionQuantity(3, 10),
+    (await (await User.findByPk(1)).getCart()).setEmotionQuantity(1, 10),
+    (await (await User.findByPk(1)).getCart()).setEmotionQuantity(2, 10),
+    (await (await User.findByPk(1)).getCart()).setEmotionQuantity(3, 10),
     //
-    (await Cart.findByPk(2)).setEmotionQuantity(10, 5),
-    (await Cart.findByPk(2)).setEmotionQuantity(11, 5),
+    (await (await User.findByPk(2)).getCart()).setEmotionQuantity(10, 5),
+    (await (await User.findByPk(2)).getCart()).setEmotionQuantity(11, 5),
     //
-    (await Cart.findByPk(3)).setEmotionQuantity(30, 30),
-    (await Cart.findByPk(4)).setEmotionQuantity(40, 400),
-    (await Cart.findByPk(5)).setEmotionQuantity(50, 400),
+    (await (await User.findByPk(3)).getCart()).setEmotionQuantity(30, 30),
+    (await (await User.findByPk(4)).getCart()).setEmotionQuantity(40, 400),
+    (await (await User.findByPk(5)).getCart()).setEmotionQuantity(50, 400),
     //
-    (await Cart.findByPk(6)).setEmotionQuantity(60, 500),
-    (await Cart.findByPk(6)).setEmotionQuantity(61, 35),
-    (await Cart.findByPk(6)).setEmotionQuantity(62, 27),
+    (await (await User.findByPk(6)).getCart()).setEmotionQuantity(60, 500),
+    (await (await User.findByPk(6)).getCart()).setEmotionQuantity(61, 35),
+    (await (await User.findByPk(6)).getCart()).setEmotionQuantity(62, 27),
   ]);
 
-  // Creating Orders for users 1-3, from carts
-  const orders = await Promise.all([
-    (await Cart.findByPk(1)).createOrderFromCart(),
-    (await Cart.findByPk(2)).createOrderFromCart(),
-    (await Cart.findByPk(3)).createOrderFromCart(),
-  ]);
-
-  // Create Wishlists for users 1-6
-  const wishlists = await Promise.all([
-    (await User.findByPk(11)).createWishlist({}),
-    (await User.findByPk(12)).createWishlist({}),
-    (await User.findByPk(13)).createWishlist({}),
-    (await User.findByPk(14)).createWishlist({}),
-    (await User.findByPk(15)).createWishlist({}),
-    (await User.findByPk(16)).createWishlist({}),
-  ]);
-
-  // Add items to wishlists
+  //checkout 3 carts
   await Promise.all([
-    (await (await User.findByPk(11)).getWishlist()).addEmotion(1),
-    (await (await User.findByPk(11)).getWishlist()).addEmotion(2),
-    (await (await User.findByPk(11)).getWishlist()).addEmotion(3),
-    //
-    (await (await User.findByPk(12)).getWishlist()).addEmotion(10),
-    (await (await User.findByPk(12)).getWishlist()).addEmotion(11),
-    //
-    (await (await User.findByPk(13)).getWishlist()).addEmotion(30),
+    (await User.findByPk(1)).checkoutCart(),
+    (await User.findByPk(2)).checkoutCart(),
+    (await User.findByPk(3)).checkoutCart(),
   ]);
 
-  // Move from Wishlist to Cart
-  await Promise.all;
-  [
-    (await (await User.findByPk(11)).getWishlist()).moveEmotionToCart(1),
-    (await (await User.findByPk(11)).getWishlist()).moveEmotionToCart(2),
-    (await (await User.findByPk(11)).getWishlist()).moveEmotionToCart(3),
-  ];
+  const orders = await Order.findAll({ where: { status: 'ordered' } });
+  const carts = await Order.findAll({ where: { status: 'cart' } });
 
   // seeding has completed
-  console.log(`seeded ${users.length}, users ${emotions.length} emotions `);
+  console.log(
+    `seeded ${users.length} users, ${emotions.length} emotions, ${carts.length} carts, and ${orders.length} executed orders`
+  );
   console.log(`seeded successfully`);
 
   return {
@@ -1625,8 +1592,8 @@ async function runSeed() {
     process.exitCode = 1;
   } finally {
     console.log('closing db connection');
-    // await db.close();
-    // console.log('db connection closed');
+    await db.close();
+    console.log('db connection closed');
   }
 }
 

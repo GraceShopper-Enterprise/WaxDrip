@@ -1,14 +1,14 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-const axios = require("axios");
+const Sequelize = require('sequelize');
+const db = require('../db');
+const axios = require('axios');
 
-const Emotion = db.define("emotion", {
+const Emotion = db.define('emotion', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   imageURL: {
@@ -27,4 +27,15 @@ const Emotion = db.define("emotion", {
   },
 });
 
+/**
+ * instanceMethods
+ */
+
+/**
+ * classMethods
+ */
+
+/**
+ * hooks
+ */
 module.exports = Emotion;

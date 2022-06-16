@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 const axios = require('axios');
 const Emotion = require('./Emotion');
-const Order = require('./Order')
 
 const OrderEmotion = db.define('orderEmotion', {
   orderId: {
@@ -18,24 +17,40 @@ const OrderEmotion = db.define('orderEmotion', {
     defaultValue: 1,
     allowNull: false,
   },
-  emotionPriceAtPurchase: {
-    type: Sequelize.DECIMAL(10, 2),
-    defaultValue: 0.0,
+  emotionPrice: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
     allowNull: false,
   },
 });
 
+/**
+ * instanceMethods
+ */
+
+/**
+ * classMethods
+ */
+
+/**
+ * hooks
+ */
+
 const assignPrice = async (orderEmotion) => {
   const emotion = await Emotion.findByPk(orderEmotion.emotionId);
   const emotionPrice = emotion.price;
-  orderEmotion.emotionPriceAtPurchase = emotionPrice;
+  orderEmotion.emotionPrice = emotionPrice;
 };
 
+// assign price whenever first created, or when the quantity changes
 OrderEmotion.beforeCreate(assignPrice);
 OrderEmotion.beforeBulkCreate((orderEmotion) =>
   Promise.all(orderEmotion.map(assignPrice))
 );
 
-
+OrderEmotion.beforeUpdate(assignPrice);
+OrderEmotion.beforeBulkUpdate((orderEmotion) =>
+  Promise.all(orderEmotion.map(assignPrice))
+);
 
 module.exports = OrderEmotion;
