@@ -1,14 +1,14 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const axios = require('axios');
-const OrderEmotion = require('./OrderEmotion');
-const Order = require('./Order');
+const Sequelize = require("sequelize");
+const { Op } = require("sequelize");
+const db = require("../db");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const axios = require("axios");
+const Order = require("./Order");
 
 const SALT_ROUNDS = 5;
 
-const User = db.define('user', {
+const User = db.define("user", {
   username: {
     type: Sequelize.STRING,
     unique: true,
@@ -22,8 +22,8 @@ const User = db.define('user', {
     unique: true,
   },
   type: {
-    type: Sequelize.ENUM('siteAdmin', 'customer'),
-    defaultValue: 'customer',
+    type: Sequelize.ENUM("siteAdmin", "customer"),
+    defaultValue: "customer",
   },
   address: {
     type: Sequelize.STRING,
@@ -47,16 +47,35 @@ User.prototype.generateToken = function () {
 //new methods
 User.prototype.getCart = async function () {
   const cart = await Order.findOne({
-    where: { userId: this.id, status: 'cart' },
+    where: { userId: this.id, status: "cart" },
   });
   return cart;
+};
+
+User.prototype.getWishlists = async function () {
+  const wishlists = await Order.findAll({
+    where: { userId: this.id, status: "wishlist" },
+  });
+  return wishlists;
+};
+
+User.prototype.getOldOrders = async function () {
+  const oldOrders = await Order.findAll({
+    where: {
+      userId: this.id,
+      status: {
+        [Op.or]: ["ordered", "en-route", "delivered"],
+      },
+    },
+  });
+  return oldOrders;
 };
 
 User.prototype.checkoutCart = async function () {
   const cart = await this.getCart();
   const date = new Date();
-  await cart.update({ status: 'ordered', datePurchased: date });
-  this.createOrder({ status: 'cart' });
+  await cart.update({ status: "ordered", datePurchased: date });
+  this.createOrder({ status: "cart" });
 };
 
 /**
@@ -65,7 +84,7 @@ User.prototype.checkoutCart = async function () {
 User.authenticate = async function ({ username, password }) {
   const user = await this.findOne({ where: { username } });
   if (!user || !(await user.correctPassword(password))) {
-    const error = Error('Incorrect username/password');
+    const error = Error("Incorrect username/password");
     error.status = 401;
     throw error;
   }
@@ -75,13 +94,14 @@ User.authenticate = async function ({ username, password }) {
 User.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
-    const user = User.findByPk(id);
+    const user = await User.findByPk(id);
+
     if (!user) {
-      throw 'nooo';
+      throw "nooo";
     }
     return user;
   } catch (ex) {
-    const error = Error('bad token');
+    const error = Error("bad token");
     error.status = 401;
     throw error;
   }
@@ -92,13 +112,13 @@ User.findByToken = async function (token) {
  */
 const hashPassword = async (user) => {
   //in case the password has been changed, we want to encrypt it with bcrypt
-  if (user.changed('password')) {
+  if (user.changed("password")) {
     user.password = await bcrypt.hash(user.password, SALT_ROUNDS);
   }
 };
 
 const makeCart = async (user) => {
-  user.createOrder({ status: 'cart' });
+  user.createOrder({ status: "cart" });
 };
 
 User.beforeCreate(hashPassword);
