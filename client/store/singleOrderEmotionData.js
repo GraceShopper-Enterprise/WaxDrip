@@ -1,4 +1,5 @@
 import axios from "axios";
+import SingleEmotion from "../components/SingleEmotion";
 
 //ACTION TYPES
 const SINGLE_ORDER_EMOTIONDATA = "SINGLE_ORDER_EMOTIONDATA";
@@ -27,7 +28,7 @@ const initalState = [];
 
 //Reducer
 
-const singleOrderReducer = (state = initalState, action) => {
+const singleOrderEmotionDataReducer = (state = initalState, action) => {
   switch (action.type) {
     case SINGLE_ORDER_EMOTIONDATA:
       return action.EmotionData;
@@ -35,4 +36,4 @@ const singleOrderReducer = (state = initalState, action) => {
       return state;
   }
 };
-export default singleOrderReducer;
+export default singleOrderEmotionDataReducer;
