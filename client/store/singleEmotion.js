@@ -1,7 +1,9 @@
 import axios from "axios";
 
+//ACTION TYPES
 const SINGLE_EMOTION = "SINGLE_EMOTION";
 
+//ACTION CREATORS
 export const setSingleEmotion = (emotion) => {
   return {
     type: SINGLE_EMOTION,
@@ -9,8 +11,7 @@ export const setSingleEmotion = (emotion) => {
   };
 };
 
-// Thunk
-
+// THUNK CREATORS
 export const fetchSingleEmotion = (id) => {
   return async (dispatch) => {
     try {

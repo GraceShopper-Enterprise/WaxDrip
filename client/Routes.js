@@ -24,19 +24,19 @@ class Routes extends Component {
         {/* islogged in should only affect the login views */}
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
+            <Route exact path="/home" component={Home} />
           </Switch>
         ) : (
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
           </Switch>
         )}
         {/* all users should be able to view items, regardless of loggin status */}
         <Switch>
           <Route exact path="/emotions" component={AllEmotions} />
           <Route exact path="/emotions/:emotionId" component={SingleEmotion} />
+          <AllEmotions />
           <Redirect to="/home" />
         </Switch>
       </div>
