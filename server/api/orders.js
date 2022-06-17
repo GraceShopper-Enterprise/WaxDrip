@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   models: { Order },
 } = require("../db");
+const OrderEmotion = require("../db/models/OrderEmotion");
 module.exports = router;
 
 // GET /api/orders
@@ -21,6 +22,20 @@ router.get("/:orderId", async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.orderId);
     res.send(order);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET /api/orders/:orderId/emotionData
+// get single order's emotion Data, i.e. quantities and saved prices
+router.get("/:orderId/emotionData", async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId);
+    const emotionData = await OrderEmotion.findAll({
+      where: { orderId: order.id },
+    });
+    res.send(emotionData);
   } catch (err) {
     next(err);
   }
