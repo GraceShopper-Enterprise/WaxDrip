@@ -1,12 +1,11 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { fetchEmotions, setEmotions } from "../store/allEmotions";
-//import SingleEmotion from './SingleEmotion';
 
 const AllEmotions = (props) => {
   const dispatch = useDispatch();
-  console.log(props);
   const emotions = props.allEmotions.emotions;
 
   useEffect(() => {
@@ -19,17 +18,38 @@ const AllEmotions = (props) => {
 
   return (
     <div>
-      All Products
+      <div className="singleHeader">
+        <div>WAXDRIP</div>
+        <div className="cartLinks">
+          <Link to="/emotions">Back to All Items</Link>
+          <Link to="/emotions">Add Item to Cart</Link>
+          <Link to="/emotions">Edit My Cart</Link>
+        </div>
+        <div>
+          <Link to="/emotions">
+            View My Cart
+            {/* {<img src="../../public/images/shoppingCart.png" />} */}
+          </Link>
+        </div>
+      </div>
       <div className="displayAll">
         {emotions.map((emotion) => (
           <div key={emotion.id}>
             <div className="singleItem">
-              <img className="emotionImages" src={emotion.imageURL} />
-              <div>ProductId: {emotion.id}</div>
-              <div>
-                {emotion.name}: {emotion.stockQuantity}
-              </div>
+              <Link to={`/emotions/${emotion.id}`}>
+                <div className="emotionImages">
+                  {<img src={emotion.imageURL} />}
+                </div>
+              </Link>
               <div>Price: ${emotion.price}</div>
+              <div className="allProButtons">
+                <div>
+                  <button>Add To Cart</button>
+                </div>
+                <div>
+                  <button>Special Offers</button>
+                </div>
+              </div>
             </div>
           </div>
         ))}

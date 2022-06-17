@@ -5,11 +5,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "./auth";
 import emotionReducer from "./allEmotions";
 import singleEmotionReducer from "./singleEmotion";
+import usersReducer from "./allUsers";
 
 const reducer = combineReducers({
   auth,
   emotions: emotionReducer,
   singleEmotion: singleEmotionReducer,
+  users: usersReducer,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
