@@ -16,7 +16,15 @@ export class UserCart extends React.Component {
     console.log(this.props);
     return (
       <div>
-        <h1>Hello Carts</h1>
+        <h1>Your Cart</h1>
+
+        {this.props.orderEmotionData.map((emotionData) => (
+          <div key={emotionData.orderId}>
+            <h2> Emotion Quanitiy {emotionData.emotionQuantity}</h2>
+            <h2> Emotion Price{emotionData.emotionPriceInOrder}</h2>
+            <h2> Emotion Id{emotionData.emotionId}</h2>
+          </div>
+        ))}
       </div>
     );
   }
