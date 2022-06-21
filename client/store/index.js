@@ -16,7 +16,7 @@ const reducer = combineReducers({
   users: usersReducer,
   orders: ordersReducer,
   singleOrder: singleOrderReducer,
-  // singleOrderEmotionData: singleOrderEmotionDataReducer,
+  singleOrderEmotionData: singleOrderEmotionDataReducer,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
