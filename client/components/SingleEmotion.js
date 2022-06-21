@@ -29,14 +29,27 @@ export class SingleEmotion extends React.Component {
           </div>
         </div>
         <h1>{singleItem.name}</h1>
-        <ul>
-          <img src={singleItem.imageURL} />
-
-          <li>{singleItem.description}</li>
-          <li>{singleItem.price}</li>
-          <li>{singleItem.reccomendedEmpathyLevel}</li>
-          <li>{singleItem.stockQuantity}</li>
-        </ul>
+        <div className="item">
+          <div className="itemDetails">
+            <div className="empathy">
+              Empathy Level: {singleItem.reccomendedEmpathyLevel}
+            </div>
+            <div className="singleImg">
+              <img src={singleItem.imageURL} />
+            </div>
+            <div className="description">
+              <div>
+                <h2>Description:</h2> {singleItem.description}
+              </div>
+            </div>
+            <div>
+              <span>Price:</span> ${singleItem.price}
+            </div>
+            <div>
+              <span>On Hand Quantity:</span> {singleItem.stockQuantity}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

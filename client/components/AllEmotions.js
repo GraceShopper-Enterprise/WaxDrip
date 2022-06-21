@@ -37,13 +37,14 @@ const AllEmotions = (props) => {
         {emotions.map((emotion) => (
           <div key={emotion.id}>
             <div className="singleItem">
-              <Link to={`/emotions/${emotion.id}`}>
-                <div className="emotionImages">
-                  {<img src={emotion.imageURL} />}
-                </div>
-              </Link>
+              <div className="price">Price: ${emotion.price}</div>
+              <div className="emotionImages">
+                <Link to={`/emotions/${emotion.id}`}>
+                  <div>{<img src={emotion.imageURL} />}</div>
+                </Link>
+              </div>
               <div className="fontSize">{emotion.name}</div>
-              <div>Price: ${emotion.price}</div>
+
               <div className="allProButtons">
                 <div>
                   <button>Add To Cart</button>

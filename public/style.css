@@ -10,6 +10,10 @@ a:hover {
   color: black;
   transition: color 0.5s ease;
 }
+h1 {
+  display: flex;
+  justify-content: center;
+}
 
 label {
   display: block;
@@ -22,7 +26,6 @@ nav a {
 
 /* img {
   border-radius: 3px;
-  object-fit: contain;
 } */
 
 form div {
@@ -30,15 +33,31 @@ form div {
   display: inline-block;
 }
 
+span {
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+/* AllProductsView features */
 .displayAll {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
+  margin-left: 40px;
 }
 
 .singleItem {
-  margin: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+  background-color: darkgray;
+  border-radius: 5px;
+  height: 250px;
+  width: 200px;
+}
+.price {
+  margin-left: 7px;
 }
 .allProButtons {
   display: flex;
@@ -47,10 +66,12 @@ form div {
 }
 .emotionImages img {
   border-radius: 3px;
+  margin-top: 10px;
   height: 100px;
   width: 100%;
 }
 
+/* SingleView features */
 .singleHeader {
   display: flex;
   flex-direction: row;
@@ -65,5 +86,37 @@ form div {
   width: 550px;
 }
 .fontSize {
+  display: flex;
   font-size: 36px;
+  justify-content: center;
+}
+.item {
+  display: flex;
+  justify-content: center;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+  padding: 25px;
+  background-color: darkgray;
+  border-radius: 5px;
+  height: 350px;
+  width: 550px;
+}
+.empathy {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+  font-size: larger;
+}
+
+.singleImg {
+  display: flex;
+  justify-content: center;
+}
+.description {
+  margin-bottom: 10px;
 }
