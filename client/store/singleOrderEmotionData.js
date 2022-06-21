@@ -1,9 +1,20 @@
 import axios from "axios";
+import SingleEmotion from "../components/SingleEmotion";
+import { _deleteEmotion } from "./allEmotions";
 
 //ACTION TYPES
 const SINGLE_ORDER_EMOTIONDATA = "SINGLE_ORDER_EMOTIONDATA";
+const UNASSIGN_ORDER_SINGLE_EMOTION = "UNASSIGN_ORDER_SINGLE_EMOTION";
 
 //ACTION CREATORS
+
+export const _unassignOrderSingleEmotion = (Emotion) => {
+  return {
+    type: UNASSIGN_ORDER_SINGLE_EMOTION,
+    unassignedEmotion: Emotion,
+  };
+};
+
 export const setSingleOrderEmotionData = (EmotionData) => {
   return {
     type: SINGLE_ORDER_EMOTIONDATA,
@@ -23,16 +34,25 @@ export const fetchSingleOrderEmotionData = (orderId) => {
   };
 };
 
+export const unassignOrderSingleEmotion = (Order, Emotion) => {
+  return async (dispatch) => {
+    await axios.put(`/api/orders/${Order}/${Emotion}/unassign`);
+    dispatch(_unassignOrderSingleEmotion(Order, Emotion));
+  };
+};
+
 const initalState = [];
 
 //Reducer
 
-const singleOrderReducer = (state = initalState, action) => {
+const singleOrderEmotionDataReducer = (state = initalState, action) => {
   switch (action.type) {
     case SINGLE_ORDER_EMOTIONDATA:
       return action.EmotionData;
+    case UNASSIGN_ORDER_SINGLE_EMOTION:
+      return [...action.unassignOrderSingleEmotion];
     default:
       return state;
   }
 };
-export default singleOrderReducer;
+export default singleOrderEmotionDataReducer;
