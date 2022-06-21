@@ -1,21 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import AllEmotions from "./AllEmotions";
+import { fetchUserCart } from "../store/singleOrder";
 
 /**
  * COMPONENT
  */
-export const Home = (props) => {
-  const { username } = props;
+export class Home extends React.Component {
+  constructor() {
+    super();
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {username}</h3>
-      <AllEmotions />
-    </div>
-  );
-};
+  componentDidMount() {
+    this.props.loadUserCart(this.props.userId);
+  }
+
+  render() {
+    const { username } = this.props;
+
+    return (
+      <div>
+        <h3>Welcome, {username}</h3>
+      </div>
+    );
+  }
+}
 
 /**
  * CONTAINER
@@ -23,7 +32,14 @@ export const Home = (props) => {
 const mapState = (state) => {
   return {
     username: state.auth.username,
+    userId: state.auth.id,
   };
 };
 
-export default connect(mapState)(Home);
+const mapDispatch = (dispatch) => {
+  return {
+    loadUserCart: (userId) => dispatch(fetchUserCart(userId)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(Home);
