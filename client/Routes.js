@@ -31,6 +31,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/login" component={Login} />
+            <Route path="/signUp" component={Signup} />
           </Switch>
         )}
         {/* all users should be able to view items, regardless of loggin status */}

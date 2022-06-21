@@ -2,26 +2,36 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
-import AllEmotions from "./AllEmotions";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
     <h1>FS-App-Template</h1>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <span>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="/login" onClick={handleClick}>
+          <Link to="/home">My Home</Link>
+          <a href="#" onClick={handleClick}>
             Logout
           </a>
-        </div>
+          <Link to="/users/cart">My Cart</Link>
+        </span>
       ) : (
-        <div>
+        <span>
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-        </div>
+        </span>
+      )}
+      <Link to="/emotions">See All Emotions</Link>
+      {isAdmin ? (
+        <span>
+          <p> You are an Admin, can edit products </p>
+        </span>
+      ) : (
+        <span>
+          <p> You are NOT an Admin </p>
+        </span>
       )}
     </nav>
     <hr />
@@ -33,6 +43,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
  */
 const mapState = (state) => {
   return {
+    isAdmin: state.auth.type === "siteAdmin",
     isLoggedIn: !!state.auth.id,
   };
 };
