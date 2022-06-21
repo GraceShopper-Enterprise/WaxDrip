@@ -1,6 +1,4 @@
 import axios from "axios";
-import SingleEmotion from "../components/SingleEmotion";
-import { _deleteEmotion } from "./allEmotions";
 
 //ACTION TYPES
 const SINGLE_ORDER_EMOTIONDATA = "SINGLE_ORDER_EMOTIONDATA";
@@ -8,10 +6,11 @@ const UNASSIGN_ORDER_SINGLE_EMOTION = "UNASSIGN_ORDER_SINGLE_EMOTION";
 
 //ACTION CREATORS
 
-export const _unassignOrderSingleEmotion = (Emotion) => {
+export const _unassignOrderSingleEmotion = (orderId, emotionId) => {
   return {
     type: UNASSIGN_ORDER_SINGLE_EMOTION,
-    unassignedEmotion: Emotion,
+    unassignedEmotionId: emotionId,
+    singleOrderId: orderId,
   };
 };
 
@@ -34,10 +33,10 @@ export const fetchSingleOrderEmotionData = (orderId) => {
   };
 };
 
-export const unassignOrderSingleEmotion = (Order, Emotion) => {
+export const unassignOrderSingleEmotion = (orderId, emotionId) => {
   return async (dispatch) => {
-    await axios.put(`/api/orders/${Order}/${Emotion}/unassign`);
-    dispatch(_unassignOrderSingleEmotion(Order, Emotion));
+    await axios.put(`/api/orders/${orderId}/${emotionId}/unassign`);
+    dispatch(_unassignOrderSingleEmotion(orderId, emotionId));
   };
 };
 
@@ -50,7 +49,7 @@ const singleOrderEmotionDataReducer = (state = initalState, action) => {
     case SINGLE_ORDER_EMOTIONDATA:
       return action.EmotionData;
     case UNASSIGN_ORDER_SINGLE_EMOTION:
-      return [...action.unassignOrderSingleEmotion];
+      return [...state, action.unassignedEmotionId, action.singleOrderId];
     default:
       return state;
   }
