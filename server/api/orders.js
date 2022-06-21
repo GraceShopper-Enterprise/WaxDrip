@@ -66,8 +66,9 @@ router.put("/:orderId", async (req, res, next) => {
 // remove emotion from an order/cart/wishlist
 router.put("/:orderId/:emotionId/unassign", async (req, res, next) => {
   try {
+    console.log("hihihi");
     const order = await Order.findByPk(req.params.orderId);
-    res.send(await order.removeEmotion(req.params.emotionId));
+    res.json(await order.removeEmotion(req.params.emotionId));
   } catch (error) {
     next(error);
   }

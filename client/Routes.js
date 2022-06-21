@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import { me } from "./store";
 import AllEmotions from "./components/AllEmotions";
 import SingleEmotion from "./components/SingleEmotion";
+import AllUsers from "./components/AllUsers";
 import Cart from "./components/Cart";
 
 /**
@@ -24,21 +25,22 @@ class Routes extends Component {
         {/* islogged in should only affect the login views */}
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
+            <Route exact path="/home" component={Home} />
             <Route path="/users/:userId/:ordertype" component={Cart} />
             <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
+            <Route exact path="/" component={Login} />
             <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
           </Switch>
         )}
         {/* all users should be able to view items, regardless of loggin status */}
         <Switch>
           <Route exact path="/emotions" component={AllEmotions} />
           <Route exact path="/emotions/:emotionId" component={SingleEmotion} />
+          <AllEmotions />
+          <Redirect to="/home" />
         </Switch>
       </div>
     );
