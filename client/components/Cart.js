@@ -13,20 +13,22 @@ export class UserCart extends React.Component {
 
     this.removeEmotionHandler = this.removeEmotionHandler.bind(this);
   }
+  
 
   componentDidMount() {
     try {
       const userId = this.props.UserId;
       this.props.loadUserCart(userId);
-      this.props.loadSingleOrderEmotionData(userId);
       this.props.getAllEmotions();
-      this.props.loadSingleEmotion(emotionId);
+      const cartId = this.props.userCart.id;
+      this.props.loadSingleOrderEmotionData(cartId);
     } catch (error) {}
   }
-  removeEmotionHandler(order, emotion) {
+  removeEmotionHandler(orderId, emotionId) {
     const userId = this.props.UserId;
-    this.props.unassignOrderSingleEmotion(order, emotion);
-    this.props.loadSingleOrderEmotionData(userId);
+    const cartId = this.props.userCart.id;
+    this.props.unassignOrderSingleEmotion(orderId, emotionId);
+    this.props.loadSingleOrderEmotionData(cartId);
   }
 
   render() {
@@ -76,12 +78,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadUserCart: (id) => dispatch(fetchUserCart(id)),
-    loadSingleOrderEmotionData: (id) =>
-      dispatch(fetchSingleOrderEmotionData(id)),
+    loadUserCart: (userId) => dispatch(fetchUserCart(userId)),
+    loadSingleOrderEmotionData: (orderId) =>
+      dispatch(fetchSingleOrderEmotionData(orderId)),
     getAllEmotions: () => dispatch(fetchEmotions()),
-    unassignOrderSingleEmotion: (order, emotion) =>
-      dispatch(unassignOrderSingleEmotion(order, emotion)),
+    unassignOrderSingleEmotion: (orderId, emotionId) =>
+      dispatch(unassignOrderSingleEmotion(orderId, emotionId)),
   };
 };
 export default connect(mapStateToProps, mapDispatch)(UserCart);

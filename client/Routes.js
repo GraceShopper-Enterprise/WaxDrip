@@ -6,8 +6,10 @@ import Home from "./components/Home";
 import { me } from "./store";
 import AllEmotions from "./components/AllEmotions";
 import SingleEmotion from "./components/SingleEmotion";
+import EditEmotion from "./components/EditEmotion";
 import AllUsers from "./components/AllUsers";
 import Cart from "./components/Cart";
+import { AddToCart } from "./components/AddToCart";
 
 /**
  * COMPONENT
@@ -27,6 +29,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route path="/users/:userId/:ordertype" component={Cart} />
+            {/* <Route path="/emotions/:emotionId/edit" component={EditEmotion} /> */}
           </Switch>
         ) : (
           <Switch>
@@ -38,6 +41,7 @@ class Routes extends Component {
         <Switch>
           <Route exact path="/emotions" component={AllEmotions} />
           <Route exact path="/emotions/:emotionId" component={SingleEmotion} />
+          <Route path="/cart" component={AddToCart} />
           <AllEmotions />
           <Redirect to="/home" />
         </Switch>

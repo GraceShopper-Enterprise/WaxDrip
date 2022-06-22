@@ -3,11 +3,20 @@ import { connect, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchEmotions, setEmotions } from "../store/allEmotions";
+import { fetchUserById } from "../store/allUsers";
+import { fetchSingleEmotion } from "../store/singleEmotion";
+import { assignOrderSingleEmotion } from "../store/singleOrderEmotionData";
+import { fetchUserCart } from "../store/singleOrder";
+import { fetchSingleOrderEmotionData } from "../store/singleOrderEmotionData";
 
 const AllEmotions = (props) => {
   const dispatch = useDispatch();
-  console.log(props);
   const emotions = props.emotions;
+  const userId = props.auth.id;
+  const singleOrderEmotionData = props.singleOrderEmotionData;
+  let cart = props.singleOrder;
+  let singleEmotion = props.singleEmotion;
+  let userCart;
 
   useEffect(() => {
     async function fetchData() {
@@ -16,6 +25,18 @@ const AllEmotions = (props) => {
 
     fetchData();
   }, [dispatch]);
+
+  async function handleAddToCart(event) {
+    const emotionId = event.target.id;
+    await dispatch(fetchSingleEmotion(emotionId));
+
+
+
+    dispatch(assignOrderSingleEmotion(cart.id, emotionId));
+
+    await dispatch(fetchSingleOrderEmotionData(cart.id));
+
+  }
 
   return (
     <div>
@@ -47,7 +68,14 @@ const AllEmotions = (props) => {
 
               <div className="allProButtons">
                 <div>
-                  <button>Add To Cart</button>
+                  <button
+                    id={emotion.id}
+                    name={emotion.name}
+                    type="button"
+                    onClick={handleAddToCart}
+                  >
+                    Add To Cart
+                  </button>
                 </div>
                 <div>
                   <button>Special Offers</button>
@@ -62,7 +90,14 @@ const AllEmotions = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { emotions: state.emotions };
+  return {
+    emotions: state.emotions,
+    auth: state.auth,
+    singleOrder: state.singleOrder,
+    singleEmotion: state.singleEmotion,
+    singleOrderEmotionData: state.singleOrderEmotionData,
+    state: state,
+  };
 };
 
 export default connect(mapStateToProps)(AllEmotions);

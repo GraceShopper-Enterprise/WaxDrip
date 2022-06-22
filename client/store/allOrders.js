@@ -14,6 +14,7 @@ export const setOrders = (orders) => {
   };
 };
 
+
 const _createOrder = (order) => {
   return {
     type: CREATE_ORDER,
@@ -52,8 +53,10 @@ export const fetchUserOrders = (userId) => async (dispatch) => {
 };
 
 export const createOrder = (order, history) => {
+  //console.log(order);
   return async (dispatch) => {
     const { data: created } = await axios.post("/api/orders", order);
+    console.log(created);
     dispatch(_createOrder(created));
     history.push("/orders");
   };

@@ -48,6 +48,9 @@ export class SingleEmotion extends React.Component {
             <div>
               <span>On Hand Quantity:</span> {singleItem.stockQuantity}
             </div>
+            <div>
+              <Link to={`/emotions/${singleItem.id}/edit`} />
+            </div>
           </div>
         </div>
       </div>
