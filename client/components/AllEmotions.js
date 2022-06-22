@@ -30,12 +30,9 @@ const AllEmotions = (props) => {
     const emotionId = event.target.id;
     await dispatch(fetchSingleEmotion(emotionId));
 
-
-
-    dispatch(assignOrderSingleEmotion(cart.id, emotionId));
+    await dispatch(assignOrderSingleEmotion(cart.id, emotionId));
 
     await dispatch(fetchSingleOrderEmotionData(cart.id));
-
   }
 
   return (

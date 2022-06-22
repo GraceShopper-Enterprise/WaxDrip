@@ -20,12 +20,12 @@ export class SingleEmotion extends React.Component {
         <div className="singleHeader">
           <div>WAXDRIP</div>
           <div className="cartLinks">
-            <Link to="/emotions">Back to All Items</Link>
-            <Link to="/emotions">Add Item to Cart</Link>
-            <Link to="/emotions">Edit My Cart</Link>
+            <Link to="/home">Back to All Items</Link>
+            <Link to="/home">Add Item to Cart</Link>
+            <Link to="/home">Edit My Cart</Link>
           </div>
           <div>
-            <Link to="/emotions">View My Cart</Link>
+            <Link to="/home">View My Cart</Link>
           </div>
         </div>
         <h1>{singleItem.name}</h1>
