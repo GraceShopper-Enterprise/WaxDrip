@@ -38,7 +38,7 @@ class Routes extends Component {
         <Switch>
           <Route exact path="/emotions" component={AllEmotions} />
           <Route exact path="/emotions/:emotionId" component={SingleEmotion} />
-          <Redirect to="/home" />
+          {/* <Redirect to="/home" /> */}
         </Switch>
       </div>
     );
