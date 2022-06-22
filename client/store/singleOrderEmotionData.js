@@ -3,9 +3,9 @@ import axios from "axios";
 //ACTION TYPES
 const SINGLE_ORDER_EMOTIONDATA = "SINGLE_ORDER_EMOTIONDATA";
 const UNASSIGN_ORDER_SINGLE_EMOTION = "UNASSIGN_ORDER_SINGLE_EMOTION";
+const ASSIGN_ORDER_SINGLE_EMOTION = "ASSIGN_ORDER_SINGLE_EMOTION";
 const UPDATE_QUANTITY = "UPDATE_QUANTITY";
 const ADD_EMOTION_TO_CART = "ADD_EMOTION_TO_CART";
-//ACTION CREATORS
 
 export const _addEmotionToCart = (orderId, emotionId) => {
   return {
@@ -20,6 +20,13 @@ export const _unassignOrderSingleEmotion = (orderId, emotionId) => {
     type: UNASSIGN_ORDER_SINGLE_EMOTION,
     unassignedEmotionId: emotionId,
     singleOrderId: orderId,
+  };
+};
+
+export const _assignOrderSingleEmotion = (EmotionData) => {
+  return {
+    type: ASSIGN_ORDER_SINGLE_EMOTION,
+    EmotionData,
   };
 };
 
@@ -66,6 +73,15 @@ export const unassignOrderSingleEmotion = (orderId, emotionId) => {
   };
 };
 
+export const assignOrderSingleEmotion = (orderId, emotionId) => {
+  return async (dispatch) => {
+    const { data } = await axios.put(
+      `/api/orders/${orderId}/${emotionId}/assign`
+    );
+    dispatch(_assignOrderSingleEmotion(data));
+  };
+};
+
 export const updateQuantity = (orderId, emotionId, quantity) => {
   return async (dispatch) => {
     await axios.put(`/api/orders/${orderId}/${emotionId}/${quantity}`);
@@ -85,6 +101,8 @@ const singleOrderEmotionDataReducer = (state = initalState, action) => {
       return state.filter(
         (orderEmotion) => orderEmotion.emotionid !== action.unassignedEmotionId
       );
+    case ASSIGN_ORDER_SINGLE_EMOTION:
+      return [...state, action.EmotionData];
     case UPDATE_QUANTITY:
       const newState = state.map((orderEmotion) => {
         if (orderEmotion.emotionId === action.singleEmotionId) {
