@@ -4,8 +4,16 @@ import axios from "axios";
 const SINGLE_ORDER_EMOTIONDATA = "SINGLE_ORDER_EMOTIONDATA";
 const UNASSIGN_ORDER_SINGLE_EMOTION = "UNASSIGN_ORDER_SINGLE_EMOTION";
 const ASSIGN_ORDER_SINGLE_EMOTION = "ASSIGN_ORDER_SINGLE_EMOTION";
+const UPDATE_QUANTITY = "UPDATE_QUANTITY";
+const ADD_EMOTION_TO_CART = "ADD_EMOTION_TO_CART";
 
-//ACTION CREATORS
+export const _addEmotionToCart = (orderId, emotionId) => {
+  return {
+    type: ADD_EMOTION_TO_CART,
+    assignEmotionId: emotionId,
+    cartId: orderId,
+  };
+};
 
 export const _unassignOrderSingleEmotion = (orderId, emotionId) => {
   return {
@@ -29,15 +37,32 @@ export const setSingleOrderEmotionData = (EmotionData) => {
   };
 };
 
+export const _updateQuantity = (emotionId, quantity) => {
+  return {
+    type: UPDATE_QUANTITY,
+    singleEmotionId: emotionId,
+    newQuantity: quantity,
+  };
+};
+
 // THUNK CREATORS
 export const fetchSingleOrderEmotionData = (orderId) => {
   return async (dispatch) => {
-    try {
-      const { data } = await axios.get(`/api/orders/${orderId}/emotionData`);
-      dispatch(setSingleOrderEmotionData(data));
-    } catch (error) {
-      console.error(error);
+    if (orderId) {
+      try {
+        const { data } = await axios.get(`/api/orders/${orderId}/emotionData`);
+        dispatch(setSingleOrderEmotionData(data));
+      } catch (error) {
+        console.error(error);
+      }
     }
+  };
+};
+
+export const addEmotionToCart = (orderId, emotionId) => {
+  return async (dispatch) => {
+    await axios.put(`/api/${orderId}/${emotionId}/assign`);
+    dispatch(_addEmotionToCart(orderId, emotionId));
   };
 };
 
@@ -57,6 +82,13 @@ export const assignOrderSingleEmotion = (orderId, emotionId) => {
   };
 };
 
+export const updateQuantity = (orderId, emotionId, quantity) => {
+  return async (dispatch) => {
+    await axios.put(`/api/orders/${orderId}/${emotionId}/${quantity}`);
+    dispatch(_updateQuantity(orderId, emotionId, quantity));
+  };
+};
+
 const initalState = [];
 
 //Reducer
@@ -71,6 +103,16 @@ const singleOrderEmotionDataReducer = (state = initalState, action) => {
       );
     case ASSIGN_ORDER_SINGLE_EMOTION:
       return [...state, action.EmotionData];
+    case UPDATE_QUANTITY:
+      const newState = state.map((orderEmotion) => {
+        if (orderEmotion.emotionId === action.singleEmotionId) {
+          orderEmotion.quantity = action.newQuantity;
+          return orderEmotion;
+        } else {
+          return orderEmotion;
+        }
+      });
+      return newState;
     default:
       return state;
   }

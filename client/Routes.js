@@ -30,11 +30,13 @@ class Routes extends Component {
             <Route exact path="/home" component={Home} />
             <Route path="/users/:userId/:ordertype" component={Cart} />
             {/* <Route path="/emotions/:emotionId/edit" component={EditEmotion} /> */}
+            <Route path="/users/cart" component={Cart} />
           </Switch>
         ) : (
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/login" component={Login} />
+            <Route path="/signUp" component={Signup} />
           </Switch>
         )}
         {/* all users should be able to view items, regardless of loggin status */}
@@ -42,8 +44,9 @@ class Routes extends Component {
           <Route exact path="/emotions" component={AllEmotions} />
           <Route exact path="/emotions/:emotionId" component={SingleEmotion} />
           <Route path="/cart" component={AddToCart} />
-          <AllEmotions />
+          {/* <AllEmotions /> */}
           <Redirect to="/home" />
+          {/* <Redirect to="/home" /> */}
         </Switch>
       </div>
     );
